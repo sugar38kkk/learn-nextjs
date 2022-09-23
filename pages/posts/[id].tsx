@@ -1,4 +1,5 @@
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
+import { useRouter } from 'next/router';
 import * as React from 'react';
 
 export interface DetailPostPageProps {
@@ -6,10 +7,20 @@ export interface DetailPostPageProps {
 }
 
 export default function App ({post}: DetailPostPageProps) {
+
+  const router = useRouter();
+
+  if(router.isFallback){
+    return (
+      <h1>Loading...</h1>
+      )
+  }
   return (
     <div>
       <h1>Detail Post</h1>
       <h2>{post?.title}</h2>
+      <h2>{post?.author}</h2>
+      <p>{post?.description}</p>
     </div>
   );
 }
@@ -21,7 +32,7 @@ export const getStaticPaths: GetStaticPaths = async () =>{
 
     return {
       paths: data.data.map((post: any) => ({ params: { id: post.id } })),
-      fallback: false,
+      fallback: true,
     };
 }
 
@@ -45,7 +56,8 @@ export const getStaticProps: GetStaticProps<DetailPostPageProps> = async (
 
   return {
     props: {
-      post: data
+      post: data,
+      revalidate: 2,
     },
   };
 };

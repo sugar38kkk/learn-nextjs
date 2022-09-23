@@ -1,9 +1,13 @@
+import MainLayout from '@/components/layout/main';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useAuth } from '../hooks';
+import { NextPageWithLayout } from '../models';
 import styles from '../styles/Home.module.css';
 
-const Home: NextPage = () => {
+const Home: NextPageWithLayout = () => {
+  const {profile} = useAuth()
   return (
     <div className={styles.container}>
       <Head>
@@ -14,11 +18,13 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome <a href="/">{`${profile.first_name} ${profile.last_name}`}</a> to{' '}
+          <a href="https://nextjs.org"> NextJs!</a>
         </h1>
 
         <p className={styles.description}>
-          Get started by editing <code className={styles.code}>pages/index.tsx</code>
+          Get started by editing{' '}
+          <code className={`bg-blue-500 p-2 rounded-lg`}>pages/index.tsx</code>
         </p>
 
         <div className={styles.grid}>
@@ -62,5 +68,8 @@ const Home: NextPage = () => {
     </div>
   );
 };
+
+
+Home.Layout = MainLayout
 
 export default Home;

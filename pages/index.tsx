@@ -2,6 +2,7 @@ import MainLayout from '@/components/layout/main';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useAuth } from '../hooks';
 import { NextPageWithLayout } from '../models';
 import styles from '../styles/Home.module.css';
@@ -18,8 +19,15 @@ const Home: NextPageWithLayout = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome <a href="/">{`${profile.first_name} ${profile.last_name}`}</a> to{' '}
-          <a href="https://nextjs.org"> NextJs!</a>
+          Welcome{' '}
+          <Link href="/">
+            <a>{`${profile.first_name} ${profile.last_name}`}</a>
+          </Link>{' '}
+          to{' '}
+          <Link href="https://nextjs.org">
+            {' '}
+            <a>NextJs!</a>
+          </Link>
         </h1>
 
         <p className={styles.description}>
